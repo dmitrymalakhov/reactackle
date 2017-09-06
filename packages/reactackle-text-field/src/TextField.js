@@ -11,6 +11,7 @@ import {
   isUndef,
   registerDefaultComponentTheme,
 } from 'reactackle-core';
+
 import { Icon } from 'reactackle-icon';
 import { TooltipIcon } from 'reactackle-tooltip-icon';
 import { InfoBoxStyled } from './styles/InfoBoxStyled';
@@ -94,11 +95,11 @@ const propTypes = {
   /**
    * Add icon behind TextField
    */
-  iconOuter: PropTypes.shape(Icon.propTypes),
+  iconOuter: PropTypes.string,
   /**
    * Show icon inside TextField's boundaries
    */
-  iconInner: PropTypes.shape(Icon.propTypes),
+  iconInner: PropTypes.string,
   /**
    * Define label position
    */

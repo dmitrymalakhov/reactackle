@@ -1,26 +1,6 @@
 import { oppositeDirection } from '../styleFunctions';
 
 /**
- * Icon size mixin
- */
-export function iconSizeMixin(outerSize, imgSize, outerWidth = outerSize) {
-  return `
-    &,
-    .icon {
-      width: ${outerWidth}px;
-      height: ${outerSize}px;
-      line-height: ${outerSize}px;
-    }
-  
-    .icon::before {
-      font-size: ${imgSize}px;
-    }
-    
-    .icon-holder { background-size: ${imgSize}px; }
-  `;
-}
-
-/**
  * Generate triangle
  * @param {string} direction - triangle direction
  * @param {string} [color='currentcolor'] - triangle color

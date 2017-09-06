@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import 'font-awesome/css/font-awesome.css';
+import styled, { css } from 'styled-components';
 import {
   extractThemeOrDefault,
   getValueString,
   transition,
 } from 'reactackle-core';
-import { spin, pulse, border, rounded, transform } from '../../styles/mixins';
+import { spin, pulse, border, rounded, transform } from './mixins';
+import { iconSizeMixin } from '../iconSizeMixin';
 
 const propTypes = {
+  /** Set icon's source */
+  src: PropTypes.string,
   /** Turns on/off icon's border */
   border: PropTypes.bool,
   /** Make icon rounded */
@@ -17,10 +19,6 @@ const propTypes = {
   size: PropTypes.oneOf(['inherit', 'small', 'normal', 'large']),
   /** Scale icon */
   sizeMultiplier: PropTypes.number,
-  /** Set icon's color scheme */
-  colorScheme: PropTypes.oneOf(['light', 'dark']),
-  /** Set exact icon's color */
-  color: PropTypes.string,
   /** Set icon's background color */
   backgroundColor: PropTypes.string,
   /** Set icon's flipping plane */
@@ -38,13 +36,13 @@ const propTypes = {
    */
   theme: PropTypes.object,
 };
+
 const defaultProps = {
+  src: '',
   border: false,
   rounded: false,
   size: 'normal',
   sizeMultiplier: 1,
-  colorScheme: 'dark',
-  color: '',
   backgroundColor: '',
   flip: 'none',
   rotate: 0,
@@ -59,75 +57,49 @@ const iconSize = ({ sizeMultiplier, theme: themeFromProvider, sizeKey }) => {
   const width = getValueString(
     theme.reactackle.components.icon.size[sizeKey].width,
   );
+
   const height = getValueString(
     theme.reactackle.components.icon.size[sizeKey].height,
   );
+
+  const widthValue =
+    width !== 'inherit'
+      ? `calc(${getValueString(width)} * ${sizeMultiplier})`
+      : width;
+
+  const heightValue =
+    height !== 'inherit'
+      ? `calc(${getValueString(height)} * ${sizeMultiplier})`
+      : height;
+
+
   const imgSize = getValueString(
     theme.reactackle.components.icon.size[sizeKey].imgSize,
   );
-
-  const widthValue =
-    width !== 'inherit' ? `calc(${width} * ${sizeMultiplier})` : width;
-
-  const heightValue =
-    height !== 'inherit' ? `calc(${height} * ${sizeMultiplier})` : height;
 
   const innerSize =
     imgSize !== 'inherit' ? `calc(${imgSize} * ${sizeMultiplier})` : imgSize;
 
   return `
-    width: ${widthValue};
-    height: ${heightValue};
-    line-height: ${heightValue} !important;
-    font-size: ${innerSize} !important;
+    ${iconSizeMixin(
+      heightValue,
+      innerSize,
+      widthValue,
+    )}
   `;
 };
 
 const iconColor = ({
-  colorScheme,
-  userColor,
   bgColor,
-  theme: themeFromProvider,
-}) => {
-  const theme = extractThemeOrDefault(themeFromProvider);
-  const colorDark = theme.reactackle.components.icon.color.dark;
-  const colorLight = theme.reactackle.components.icon.color.light;
-
-  const color = colorScheme === 'dark' ? colorDark : colorLight;
-
-  return `  
-    color: ${userColor || color};
-    
+}) => css`    
     ${bgColor ? `background-color: ${bgColor}` : null}
   `;
-};
 
 // STYLES
-export const IconFontAwesomeStyled = styled.span`
+export const IconStyled = styled.div`
   text-align: center;
   flex-shrink: 0;
   position: relative;
-
-  &::before {
-    height: 100%;
-    width: 100%;
-    line-height: inherit;
-    text-align: center;
-    position: absolute;
-    font-size: inherit;
-    color: inherit;
-    top: 0;
-    left: 0;
-  }
-
-  &,
-  & *,
-  &::after,
-  &::before {
-    box-sizing: border-box;
-    font-family: FontAwesome !important;
-  }
-
   ${transition('color, opacity')};
   ${iconSize};
   ${iconColor};
@@ -136,8 +108,15 @@ export const IconFontAwesomeStyled = styled.span`
   ${transform};
   ${spin};
   ${pulse};
+
+  &,
+  & *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
 `;
 
-IconFontAwesomeStyled.propTypes = propTypes;
-IconFontAwesomeStyled.defaultProps = defaultProps;
-IconFontAwesomeStyled.displayName = 'IconFontAwesomeStyled';
+IconStyled.propTypes = propTypes;
+IconStyled.defaultProps = defaultProps;
+IconStyled.displayName = 'IconStyled';

@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { noop } from 'reactackle-core';
-import { Icon, iconPropType } from 'reactackle-icon';
+import { Icon } from 'reactackle-icon';
 import { SidebarToggleStyled } from './styles/SidebarToggleStyled';
 import { ToggleIconStyled } from './styles/ToggleIconStyled';
 import { ToggleTextStyled } from './styles/ToggleTextStyled';
@@ -13,7 +13,7 @@ const propTypes = {
   toggleButtonText: PropTypes.string,
   expanded: PropTypes.bool,
   autoCollapsing: PropTypes.bool,
-  icon: iconPropType,
+  icon: PropTypes.shape(Icon.propTypes),
   onClick: PropTypes.func,
 };
 

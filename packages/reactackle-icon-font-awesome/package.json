@@ -1,7 +1,7 @@
 {
-  "name": "reactackle-icon",
+  "name": "reactackle-icon-font-awesome",
   "version": "0.0.3-beta.2",
-  "description": "Icon component of the Reactackle ui library",
+  "description": "Icon font-awesome component of the Reactackle ui library",
   "scripts": {
     "prepublishOnly": "rimraf ./dist && npx babel ./src --out-dir ./dist"
   },
@@ -17,6 +17,7 @@
     "dist"
   ],
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {

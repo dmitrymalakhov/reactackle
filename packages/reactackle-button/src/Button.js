@@ -54,6 +54,8 @@ const propTypes = {
   disabled: PropTypes.bool,
   /** Swap icon and text position */
   iconPositionRight: PropTypes.bool,
+  /** Define Button's icon component */
+  iconComponent: PropTypes.element,
   /**
    * Define Button's icon
    * @separate Icon
@@ -93,11 +95,8 @@ const defaultProps = {
   disabled: false,
   iconPositionRight: false,
   stopPressPropagation: false,
-  icon: {
-    name: '',
-    src: '',
-    type: 'font-awesome',
-  },
+  iconComponent: Icon,
+  icon: {},
   onPress: noop,
   href: '',
 };
@@ -138,13 +137,14 @@ export default class Button extends Component {
         </ButtonTextStyled>
       : null;
 
+    const IconComponent = this.props.iconComponent;
     const buttonIcon =
       this.props.icon.name || this.props.icon.src
         ? <ButtonIconBoxStyled
             iconPositionRight={this.props.iconPositionRight}
             size={this.props.size}
           >
-            <Icon
+            <IconComponent
               {...this.props.icon}
               size={this.props.size === 'inline' ? 'inherit' : this.props.size}
               color="inherit"

@@ -1,14 +1,14 @@
-'use strict';
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { noop } from 'reactackle-core';
-import { IconLibraryStyled } from './styles/IconLibraryStyled';
-import { IconHolderStyled } from './styles/IconHolderStyled';
+import { registerDefaultComponentTheme, noop } from 'reactackle-core';
+import { IconFontAwesomeStyled } from './styles/IconFontAwesomeStyled';
+import componentTheme from './styles/theme';
+
+registerDefaultComponentTheme('icon-font-awesome', componentTheme);
 
 const propTypes = {
-  /** Set icon's source */
-  src: PropTypes.string,
+  /** Set icon's name (required for font-awesome icons */
+  name: PropTypes.string,
   /** Turns on/off icon's border */
   border: PropTypes.bool,
   /** Make icon rounded */
@@ -42,8 +42,7 @@ const propTypes = {
   tabIndex: PropTypes.number,
 };
 const defaultProps = {
-  src: '',
-
+  name: 'font-awesome',
   border: false,
   rounded: false,
   size: 'normal',
@@ -51,25 +50,26 @@ const defaultProps = {
   colorScheme: 'dark',
   color: '',
   backgroundColor: '',
-
   flip: 'none',
   rotate: 0,
   spin: false,
   pulse: false,
-
   onClick: noop,
   tabIndex: -1,
 };
 
-export const IconLibrary = props => {
+export const IconFontAwesome = props => {
+  const className = `fa fa-${props.name}`;
+
   const attributes = {
+    className,
     onClick: props.onClick,
   };
 
   if (props.tabIndex !== -1) attributes.tabIndex = props.tabIndex;
 
   return (
-    <IconLibraryStyled
+    <IconFontAwesomeStyled
       {...attributes}
       border={props.border}
       rounded={props.rounded}
@@ -82,16 +82,10 @@ export const IconLibrary = props => {
       rotate={props.rotate}
       spin={props.spin}
       pulse={props.pulse}
-    >
-      <IconHolderStyled
-        sizeMultiplier={props.sizeMultiplier}
-        sizeKey={props.size}
-        src={props.src}
-      />
-    </IconLibraryStyled>
+    />
   );
 };
 
-IconLibrary.propTypes = propTypes;
-IconLibrary.defaultProps = defaultProps;
-IconLibrary.displayName = 'IconLibrary';
+IconFontAwesome.propTypes = propTypes;
+IconFontAwesome.defaultProps = defaultProps;
+IconFontAwesome.displayName = 'IconFontAwesome';
