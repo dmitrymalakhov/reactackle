@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import { Button } from 'reactackle';
 import {
@@ -27,7 +25,7 @@ export const ButtonDemoRoute = () => (
       <DemoPreview>
         <TestBox contentSpaced flex>
           <Button
-            icon={{ name: 'apple' }}
+            hasIcon
             text="Inline Button"
             colorScheme="primary"
             size="inline"

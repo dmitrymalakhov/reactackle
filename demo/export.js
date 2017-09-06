@@ -82,6 +82,12 @@ export { IconRoute }
  from './routes/icon/icon';
 export { IconDemoRoute }
  from './routes/icon/demo';
+export { IconFontAwesomeIndexRoute }
+  from './routes/icon-font-awesome';
+export { IconFontAwesomeRoute }
+  from './routes/icon-font-awesome/icon-font-awesome';
+export { IconFontAwesomeDemoRoute }
+  from './routes/icon-font-awesome/demo';
 export { InputAutocompleteIndexRoute }
  from './routes/input-autocomplete';
 export { InputAutocompleteRoute }

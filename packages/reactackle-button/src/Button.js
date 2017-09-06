@@ -15,6 +15,10 @@ import componentTheme from './styles/theme';
 
 registerDefaultComponentTheme('button', componentTheme);
 
+const DefaultIcon = ({ size }) => (
+  <Icon size={size === 'inline' ? 'inherit' : size} />
+);
+
 const propTypes = {
   /** Define button's main text */
   text: PropTypes.string,
@@ -25,7 +29,6 @@ const propTypes = {
   alternateTitle: PropTypes.string,
   /** Define button's subtitle */
   subtitle: PropTypes.string,
-
   /** Define button's size */
   size: PropTypes.oneOf(['inline', 'small', 'normal', 'large']),
   /** Narrow button has smaller horizontal paddings */
@@ -45,7 +48,6 @@ const propTypes = {
   ]),
   /** Outlined button has border and transparent background */
   outlined: PropTypes.bool,
-
   /** Define button's radius */
   radius: PropTypes.oneOf(['none', 'default', 'rounded']),
   /** Raised button has shadow */
@@ -54,20 +56,14 @@ const propTypes = {
   disabled: PropTypes.bool,
   /** Swap icon and text position */
   iconPositionRight: PropTypes.bool,
-  /** Define Button's icon component */
-  iconComponent: PropTypes.element,
   /**
-   * Define Button's icon
-   * @separate Icon
+   * Turn on icon
    */
-  icon: PropTypes.shape({
-    /** Set icon's name (required for font-awesome icons */
-    name: PropTypes.string,
-    /** Set icon's source (required for library icons */
-    src: PropTypes.string,
-    /** Set icon type */
-    type: PropTypes.oneOf(['font-awesome', 'library']),
-  }),
+  hasIcon: PropTypes.bool,
+  /**
+   * Define icon component
+   */
+  iconComponent: PropTypes.element,
   /**
    * Stop onClick event's propagation and only call onPress
    */
@@ -95,8 +91,8 @@ const defaultProps = {
   disabled: false,
   iconPositionRight: false,
   stopPressPropagation: false,
-  iconComponent: Icon,
-  icon: {},
+  hasIcon: false,
+  iconComponent: DefaultIcon,
   onPress: noop,
   href: '',
 };
@@ -138,16 +134,13 @@ export default class Button extends Component {
       : null;
 
     const IconComponent = this.props.iconComponent;
-    const buttonIcon =
-      this.props.icon.name || this.props.icon.src
+    const buttonIcon = this.props.hasIcon
         ? <ButtonIconBoxStyled
             iconPositionRight={this.props.iconPositionRight}
             size={this.props.size}
           >
             <IconComponent
-              {...this.props.icon}
-              size={this.props.size === 'inline' ? 'inherit' : this.props.size}
-              color="inherit"
+              size={this.props.size}
             />
           </ButtonIconBoxStyled>
         : null;

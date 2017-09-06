@@ -7,6 +7,8 @@ import { HolderStyled } from './styles/HolderStyled';
 
 registerDefaultComponentTheme('icon', componentTheme);
 
+const DEFAULT_ICON = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9ItCh0LvQvtC5XzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjQgMjQ7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cjwvc3R5bGU+Cjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMjMuNSwwLjUgNS41LDAuNSA1LjUsMTguNSAyMy41LDE4LjUgIi8+CjxyZWN0IHg9IjAuNSIgeT0iNS41IiBjbGFzcz0ic3QwIiB3aWR0aD0iMTgiIGhlaWdodD0iMTgiLz4KPGc+Cgk8bGluZSBjbGFzcz0ic3QwIiB4MT0iMC41IiB5MT0iNS41IiB4Mj0iNS41IiB5Mj0iMC41Ii8+CjwvZz4KPGxpbmUgY2xhc3M9InN0MCIgeDE9IjIzLjUiIHkxPSIxOC41IiB4Mj0iMTguNSIgeTI9IjIzLjUiLz4KPGc+Cgk8bGluZSBjbGFzcz0ic3QwIiB4MT0iMTguNSIgeTE9IjUuNSIgeDI9IjIzLjUiIHkyPSIwLjUiLz4KPC9nPgo8L3N2Zz4K';
+
 const propTypes = {
   /** Set icon's source */
   src: PropTypes.string,
@@ -38,10 +40,12 @@ const propTypes = {
   tabIndex: PropTypes.number,
   /** Set icon's color scheme */
   colorScheme: PropTypes.oneOf(['light', 'dark']),
+  /** Set exact icon's border color */
+  color: PropTypes.string,
 };
 
 const defaultProps = {
-  src: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9ItCh0LvQvtC5XzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjQgMjQ7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9Cjwvc3R5bGU+Cjxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMjMuNSwwLjUgNS41LDAuNSA1LjUsMTguNSAyMy41LDE4LjUgIi8+CjxyZWN0IHg9IjAuNSIgeT0iNS41IiBjbGFzcz0ic3QwIiB3aWR0aD0iMTgiIGhlaWdodD0iMTgiLz4KPGc+Cgk8bGluZSBjbGFzcz0ic3QwIiB4MT0iMC41IiB5MT0iNS41IiB4Mj0iNS41IiB5Mj0iMC41Ii8+CjwvZz4KPGxpbmUgY2xhc3M9InN0MCIgeDE9IjIzLjUiIHkxPSIxOC41IiB4Mj0iMTguNSIgeTI9IjIzLjUiLz4KPGc+Cgk8bGluZSBjbGFzcz0ic3QwIiB4MT0iMTguNSIgeTE9IjUuNSIgeDI9IjIzLjUiIHkyPSIwLjUiLz4KPC9nPgo8L3N2Zz4K',
+  src: DEFAULT_ICON,
   border: false,
   rounded: false,
   size: 'normal',
@@ -54,6 +58,7 @@ const defaultProps = {
   onClick: noop,
   tabIndex: -1,
   colorScheme: 'dark',
+  color: '',
 };
 
 export default function Icon(props) {
@@ -72,6 +77,7 @@ export default function Icon(props) {
       sizeKey={props.size}
       bgColor={props.backgroundColor}
       colorScheme={props.colorScheme}
+      userColor={props.color}
       flip={props.flip}
       rotate={props.rotate}
       spin={props.spin}
@@ -84,7 +90,7 @@ export default function Icon(props) {
       />
     </IconStyled>
   );
-};
+}
 
 Icon.propTypes = propTypes;
 Icon.defaultProps = defaultProps;

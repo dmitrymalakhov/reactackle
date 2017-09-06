@@ -9,6 +9,7 @@ export * from 'reactackle-form';
 export * from 'reactackle-grid';
 export * from 'reactackle-header';
 export * from 'reactackle-icon';
+export * from 'reactackle-icon-font-awesome';
 export * from 'reactackle-input-autocomplete';
 export * from 'reactackle-radio-group';
 export * from 'reactackle-selectbox';

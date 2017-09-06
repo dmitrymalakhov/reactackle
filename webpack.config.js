@@ -24,6 +24,7 @@ const packagesNames = [
   // 'reactackle-grid',
   // 'reactackle-header',
   // 'reactackle-icon',
+  // 'reactackle-icon-font-awesome',
   // 'reactackle-input-autocomplete',
   // 'reactackle-radio-group',
   // 'reactackle-selectbox',

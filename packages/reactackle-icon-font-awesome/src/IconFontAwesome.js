@@ -23,7 +23,6 @@ const propTypes = {
   color: PropTypes.string,
   /** Set icon's background color */
   backgroundColor: PropTypes.string,
-
   /** Set icon's flipping plane */
   flip: PropTypes.oneOf(['none', 'horizontal', 'vertical']),
   /** Rotate icon by some degree */
@@ -58,7 +57,7 @@ const defaultProps = {
   tabIndex: -1,
 };
 
-export const IconFontAwesome = props => {
+export default function IconFontAwesome(props) {
   const className = `fa fa-${props.name}`;
 
   const attributes = {
